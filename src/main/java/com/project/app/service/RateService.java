@@ -40,7 +40,7 @@ public class RateService {
             Double value2 = rate2.getValue();
 
             return BigDecimal.valueOf(value2 / value1)
-                    .setScale(3, RoundingMode.HALF_UP)
+                    .setScale(2, RoundingMode.HALF_UP)
                     .doubleValue();
         }
         else {

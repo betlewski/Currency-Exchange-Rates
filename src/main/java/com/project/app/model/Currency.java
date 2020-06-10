@@ -28,4 +28,8 @@ public class Currency {
     @NotNull
     @Size(max = 30)
     private String fullName;
+
+    @NotNull
+    @Size(max = 30)
+    private String country;
 }

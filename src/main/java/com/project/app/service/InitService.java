@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class InitService {
-
+/*
     private CurrencyRepository currencyRepository;
     private RateRepository rateRepository;
 
@@ -63,4 +63,5 @@ public class InitService {
 
         currencyRepository.saveAll(currencies);
     }
+*/
 }

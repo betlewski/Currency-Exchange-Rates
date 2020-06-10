@@ -22,7 +22,7 @@ public class Rate {
     private Currency currency;
 
     @NotNull
-    private Double rate;
+    private Double value;
 
     @NotNull
     private LocalDate date;

@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface RateRepository extends JpaRepository<Rate, Long> {
 
-    List<Rate> findAllByCurrencyShortName(String shortName);
+    List<Rate> findAllByCurrencyShortNameOrderByDateAsc(String shortName);
     Optional<Rate> findTopByCurrencyShortNameOrderByDateDesc(String shortName);
 }

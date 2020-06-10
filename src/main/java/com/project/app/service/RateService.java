@@ -23,12 +23,12 @@ public class RateService {
         return rateRepository.findAllByCurrencyShortNameOrderByDateAsc(shortName);
     }
 
-    public Rate findTopByCurrencyShortNameOrderByDateDesc(String shortName) {
+    public Rate findLastByCurrencyShortNameOrderByDateDesc(String shortName) {
         return rateRepository.findTopByCurrencyShortNameOrderByDateDesc(shortName)
                 .orElse(null);
     }
 
-    public Double findLatestExchangeRateByShortNames(String shortName1, String shortName2) {
+    public Double findLastExchangeRateByShortNames(String shortName1, String shortName2) {
 
         Rate rate1 = rateRepository.findTopByCurrencyShortNameOrderByDateDesc(shortName1)
                 .orElse(null);

@@ -34,7 +34,7 @@ public class DataAPIService {
         this.rateRepository = rateRepository;
     }
 
-    @Scheduled(cron = "0 0 18 ? * MON-FRI")
+    @Scheduled(cron = "*/5 * * ? * MON-FRI")
     public void updateData() throws IOException {
         JSONObject json = readDataFromUrl();
         saveDataFromUrl(json);
@@ -75,6 +75,7 @@ public class DataAPIService {
             for (String value : values) {
                 String shortName = value.split("\"")[1];
                 String rateString = value.split("[:}]")[1];
+                double change = 0.0;
 
                 Currency currency = currencyRepository.findByShortName(shortName)
                         .orElse(null);
@@ -83,8 +84,20 @@ public class DataAPIService {
                         .setScale(2, RoundingMode.HALF_UP)
                         .doubleValue();
 
+                Rate lastRate = rateRepository.findTopByCurrencyShortNameOrderByDateDesc(shortName)
+                        .orElse(null);
+
+                if(lastRate != null) {
+                    String changeString = String.valueOf(
+                            ((rateValue - lastRate.getValue()) * 100) / rateValue);
+
+                    change = BigDecimal.valueOf(Double.parseDouble(changeString))
+                            .setScale(1, RoundingMode.HALF_UP)
+                            .doubleValue();
+                }
+
                 if (currency != null) {
-                    Rate newRate = new Rate(0L, currency, rateValue, newDate);
+                    Rate newRate = new Rate(0L, currency, rateValue, change, newDate);
                     rateRepository.save(newRate);
                 }
             }
@@ -98,7 +111,7 @@ public class DataAPIService {
                 .orElse(null);
 
         if(euro != null) {
-            Rate newRate = new Rate(0L, euro, 1.0, date);
+            Rate newRate = new Rate(0L, euro, 1.0, 0.0, date);
             rateRepository.save(newRate);
         }
     }

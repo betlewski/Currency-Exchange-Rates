@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -28,6 +29,17 @@ public class RateService {
                 .orElse(null);
     }
 
+    public List<Rate> findAllLastOrderByCurrencyShortNameAsc() {
+        Rate lastRate = rateRepository.findTopByCurrencyShortNameOrderByDateDesc("EUR")
+                .orElse(null);
+
+        if(lastRate != null) {
+            LocalDate lastDate = lastRate.getDate();
+            return rateRepository.findAllByDateOrderByCurrencyShortNameAsc(lastDate);
+        }
+        return null;
+    }
+
     public Double findLastExchangeRateByShortNames(String shortName1, String shortName2) {
 
         Rate rate1 = rateRepository.findTopByCurrencyShortNameOrderByDateDesc(shortName1)
@@ -43,8 +55,6 @@ public class RateService {
                     .setScale(2, RoundingMode.HALF_UP)
                     .doubleValue();
         }
-        else {
-            return null;
-        }
+        return null;
     }
 }

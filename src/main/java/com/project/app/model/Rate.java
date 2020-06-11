@@ -25,5 +25,8 @@ public class Rate {
     private Double value;
 
     @NotNull
+    private Double lastChange;
+
+    @NotNull
     private LocalDate date;
 }

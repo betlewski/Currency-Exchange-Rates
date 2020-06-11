@@ -25,6 +25,12 @@ public class RateController {
         return rateService.findAllByCurrencyShortNameOrderByDateAsc(shortName);
     }
 
+    @GetMapping("/allLast")
+    @ResponseBody
+    public List<Rate> findAllLastOrderByCurrencyShortNameAsc() {
+        return rateService.findAllLastOrderByCurrencyShortNameAsc();
+    }
+
     @GetMapping("/lastByShortName/{shortName}")
     @ResponseBody
     public Rate findLastByCurrencyShortNameOrderByDateDesc(@PathVariable String shortName) {

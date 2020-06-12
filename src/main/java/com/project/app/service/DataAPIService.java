@@ -73,23 +73,20 @@ public class DataAPIService {
         if(lastDate == null || newDate.isAfter(lastDate)) {
             JSONObject rates = (JSONObject) json.get("rates");
 
-            List<String> shortNames = currencyRepository.findAll()
+            List<Currency> currencies = currencyRepository.findAll()
                     .stream()
-                    .map(Currency::getShortName)
-                    .filter(shortName -> !shortName.equals("EUR"))
+                    .filter(currency -> !currency.getShortName().equals("EUR"))
                     .collect(Collectors.toList());
 
-            for (String shortName : shortNames) {
+            for (Currency currency : currencies) {
+                String shortName = currency.getShortName();
+
                 String rateString = rates.get(shortName).toString();
-                double change = 0.0;
-
-                Currency currency = currencyRepository.findByShortName(shortName)
-                        .orElse(null);
-
                 Double rateValue = BigDecimal.valueOf(Double.parseDouble(rateString))
                         .setScale(2, RoundingMode.HALF_UP)
                         .doubleValue();
 
+                double change = 0.0;
                 Rate lastRate = rateRepository.findTopByCurrencyShortNameOrderByDateDesc(shortName)
                         .orElse(null);
 
@@ -101,11 +98,8 @@ public class DataAPIService {
                             .setScale(1, RoundingMode.HALF_UP)
                             .doubleValue();
                 }
-
-                if(currency != null) {
-                    Rate newRate = new Rate(0L, currency, rateValue, change, newDate);
-                    rateRepository.save(newRate);
-                }
+                Rate newRate = new Rate(0L, currency, rateValue, change, newDate);
+                rateRepository.save(newRate);
             }
             saveBaseRate(newDate);
             System.out.println("Update data on " + newDate);

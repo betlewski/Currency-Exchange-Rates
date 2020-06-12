@@ -25,6 +25,7 @@ target/
 # dependencies
 /node
 frontend/node_modules
+frontend/dist
 node/
 
 # IDEs and editors

@@ -17,7 +17,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DataAPIService {
@@ -34,14 +36,14 @@ public class DataAPIService {
         this.rateRepository = rateRepository;
     }
 
-    @Scheduled(cron = "*/5 * * ? * MON-FRI")
-    public void updateData() throws IOException {
+    @Scheduled(cron = "0 0 18 ? * MON-FRI")
+    public void updateData() throws IOException, JSONException {
         JSONObject json = readDataFromUrl();
         saveDataFromUrl(json);
     }
 
-    private JSONObject readDataFromUrl() throws IOException, JSONException {
-        try(InputStream is = new URL(DataAPIService.API_URL).openStream()) {
+    private JSONObject readDataFromUrl() throws IOException {
+        try (InputStream is = new URL(DataAPIService.API_URL).openStream()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             String jsonText = readAll(rd);
 
@@ -59,7 +61,7 @@ public class DataAPIService {
         return sb.toString();
     }
 
-    private void saveDataFromUrl(JSONObject json) {
+    private void saveDataFromUrl(JSONObject json) throws JSONException {
         LocalDate lastDate, newDate;
 
         Optional<Rate> rate = rateRepository.findTopByCurrencyShortNameOrderByDateDesc("EUR");
@@ -69,12 +71,16 @@ public class DataAPIService {
         newDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         if(lastDate == null || newDate.isAfter(lastDate)) {
-            String rates = json.get("rates").toString();
-            String[] values = rates.split(",");
+            JSONObject rates = (JSONObject) json.get("rates");
 
-            for (String value : values) {
-                String shortName = value.split("\"")[1];
-                String rateString = value.split("[:}]")[1];
+            List<String> shortNames = currencyRepository.findAll()
+                    .stream()
+                    .map(Currency::getShortName)
+                    .filter(shortName -> !shortName.equals("EUR"))
+                    .collect(Collectors.toList());
+
+            for (String shortName : shortNames) {
+                String rateString = rates.get(shortName).toString();
                 double change = 0.0;
 
                 Currency currency = currencyRepository.findByShortName(shortName)
@@ -96,7 +102,7 @@ public class DataAPIService {
                             .doubleValue();
                 }
 
-                if (currency != null) {
+                if(currency != null) {
                     Rate newRate = new Rate(0L, currency, rateValue, change, newDate);
                     rateRepository.save(newRate);
                 }

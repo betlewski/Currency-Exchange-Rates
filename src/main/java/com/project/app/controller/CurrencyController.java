@@ -5,6 +5,8 @@ import com.project.app.service.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/currency")
 @CrossOrigin
@@ -15,6 +17,18 @@ public class CurrencyController {
     @Autowired
     public CurrencyController(CurrencyService currencyService) {
         this.currencyService = currencyService;
+    }
+
+    @GetMapping("/all")
+    @ResponseBody
+    public List<Currency> findAll() {
+        return currencyService.findAll();
+    }
+
+    @GetMapping("/allShortNames")
+    @ResponseBody
+    public List<String> findAllShortNames() {
+        return currencyService.findAllShortNames();
     }
 
     @GetMapping("/byShortName/{shortName}")

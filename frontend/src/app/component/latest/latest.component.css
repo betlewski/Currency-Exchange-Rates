@@ -1,0 +1,20 @@
+.data {
+  position: absolute;
+  margin-top: 270px;
+  margin-left: 420px;
+}
+
+.table {
+  text-align: center;
+  margin-bottom: 10%;
+}
+
+.form-control {
+  width: 300px;
+}
+
+.form-date {
+  width: 130px;
+  text-align: center;
+  margin-left: 320px;
+}

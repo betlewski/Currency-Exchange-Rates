@@ -8,6 +8,8 @@ import { LatestComponent } from './component/latest/latest.component';
 import { HistoryComponent } from './component/history/history.component';
 import { CalculatorComponent } from './component/calculator/calculator.component';
 import { AboutComponent } from './component/about/about.component';
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { AboutComponent } from './component/about/about.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [RateService],
   bootstrap: [AppComponent]

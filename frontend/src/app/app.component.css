@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=Acme');
+@import url('https://fonts.googleapis.com/css?family=Numans');
+@import url('https://fonts.googleapis.com/css?family=Passion%20One');
+
+html {
+  background-image: url("../assets/sky.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 80vh;
+}
+
+.container {
+  position: absolute;
+  margin-top: 50px;
+}
+
+.title {
+  font-family: 'Acme', serif;
+  color: white;
+  font-size: 40px;
+  text-shadow: 4px 4px 4px black;
+  text-align: center;
+  margin-left: 530px;
+}
+
+.topnav {
+  font-family: 'Passion One', serif;
+  overflow: hidden;
+  background-color: lightskyblue;
+  margin-top: 5vh;
+  margin-left: 36vw;
+}
+
+.topnav a {
+  font-size: 25px;
+  float: left;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 2px 2px 2px darkblue;
+  padding: 14px 16px;
+}
+
+.topnav a:hover {
+  background-color: white;
+  color: black;
+  text-shadow: none;
+}

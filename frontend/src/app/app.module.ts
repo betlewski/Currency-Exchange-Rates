@@ -7,15 +7,15 @@ import {RateService} from "./service/rate.service";
 import { LatestComponent } from './component/latest/latest.component';
 import { HistoryComponent } from './component/history/history.component';
 import { CalculatorComponent } from './component/calculator/calculator.component';
-import { MainComponent } from './component/main/main.component';
+import { AboutComponent } from './component/about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AboutComponent,
     LatestComponent,
     HistoryComponent,
-    CalculatorComponent,
-    MainComponent
+    CalculatorComponent
   ],
   imports: [
     BrowserModule,

@@ -30,7 +30,7 @@ export class RateService {
   }
 
   public findLastByShortNames(shortName1: string, shortName2: string): Observable<number> {
-    return this.httpClient.get<number>(this.FIND_LAST_BY_SHORTNAMES_URL
+    return this.httpClient.get<number>(this.FIND_LAST_BY_SHORTNAMES_URL +
       + "/" + shortName1 + "/" + shortName2);
   }
 }

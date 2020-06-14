@@ -21,8 +21,8 @@ public class CurrencyController {
 
     @GetMapping("/all")
     @ResponseBody
-    public List<Currency> findAll() {
-        return currencyService.findAll();
+    public List<Currency> findAllOrdered() {
+        return currencyService.findAllOrdered();
     }
 
     @GetMapping("/allShortNames")

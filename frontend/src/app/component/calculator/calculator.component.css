@@ -1,0 +1,43 @@
+.data {
+  position: absolute;
+  margin-top: 330px;
+  margin-left: 500px;
+}
+
+.custom-select {
+  width: 250px;
+  margin-left: 20px;
+}
+
+.form-control {
+  width: 300px;
+}
+
+.space {
+  margin-top: 40px;
+}
+
+.margin {
+  margin-left: 145px;
+}
+
+.form-data {
+  width: 100px;
+  height: 50px;
+  margin-left: 20px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.btn {
+  color: black;
+  background-color: lightskyblue;
+  font-family: 'Numans', serif;
+  width: 220px;
+  margin-left: 170px;
+  margin-top: 30px;
+}
+
+.btn:hover {
+  color: white;
+}

@@ -1,1 +1,45 @@
-<p>calculator works!</p>
+<div class="data">
+  <form>
+    <div class="form-group">
+      <div class="form-row">
+        <label>
+          <select class="browser-default custom-select" name="chosenFrom" [(ngModel)]="chosenFrom" (ngModelChange)="onChangeFrom()">
+            <option value=null>from</option>
+            <option *ngFor="let currency of currenciesFrom" [ngValue]="currency">
+              {{currency.shortName + " - " + currency.fullName}}
+            </option>
+          </select>
+        </label>
+        <label>
+          <select class="browser-default custom-select" name="chosenTo" [(ngModel)]="chosenTo" (ngModelChange)="onChangeTo()">
+            <option value=null>to</option>
+            <option *ngFor="let currency of currenciesTo" [ngValue]="currency">
+              {{currency.shortName + " - " + currency.fullName}}
+            </option>
+          </select>
+        </label>
+      </div>
+      <div class="form-row space margin">
+        <label>
+          <input class="form-control form-data" name="value1From" [(ngModel)]="value1From" [disabled]="true">
+        </label>
+        <label>
+          <input class="form-control form-data" name="value1To" [(ngModel)]="value1To" [disabled]="true">
+        </label>
+      </div>
+      <div class="form-row margin">
+        <label>
+          <input class="form-control form-data" placeholder="value" [(ngModel)]="value2From" name="value2From">
+        </label>
+        <label>
+          <input class="form-control form-data" name="value2To" [(ngModel)]="value2To" [disabled]="true">
+        </label>
+      </div>
+      <div class="form-row">
+        <div class="form-group text-center">
+          <input type="submit" value="Calculate" class="btn" (click)="calculate()">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

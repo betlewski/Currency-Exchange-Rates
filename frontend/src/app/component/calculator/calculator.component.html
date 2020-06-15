@@ -4,7 +4,7 @@
       <div class="form-row">
         <label>
           <select class="browser-default custom-select" name="chosenFrom" [(ngModel)]="chosenFrom" (ngModelChange)="onChangeFrom()">
-            <option value=null>from</option>
+            <option value=null>z waluty</option>
             <option *ngFor="let currency of currenciesFrom" [ngValue]="currency">
               {{currency.shortName + " - " + currency.fullName}}
             </option>
@@ -12,7 +12,7 @@
         </label>
         <label>
           <select class="browser-default custom-select" name="chosenTo" [(ngModel)]="chosenTo" (ngModelChange)="onChangeTo()">
-            <option value=null>to</option>
+            <option value=null>na walutę</option>
             <option *ngFor="let currency of currenciesTo" [ngValue]="currency">
               {{currency.shortName + " - " + currency.fullName}}
             </option>
@@ -29,7 +29,7 @@
       </div>
       <div class="form-row margin">
         <label>
-          <input class="form-control form-data" placeholder="value" [(ngModel)]="value2From" name="value2From">
+          <input class="form-control form-data" placeholder="liczba" [(ngModel)]="value2From" name="value2From">
         </label>
         <label>
           <input class="form-control form-data" name="value2To" [(ngModel)]="value2To" [disabled]="true">
@@ -37,7 +37,7 @@
       </div>
       <div class="form-row">
         <div class="form-group text-center">
-          <input type="submit" value="Calculate" class="btn" (click)="calculate()">
+          <input type="submit" value="Oblicz" class="btn" (click)="calculate()">
         </div>
       </div>
     </div>

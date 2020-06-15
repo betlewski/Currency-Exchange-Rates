@@ -1,1 +1,17 @@
-<p>history works!</p>
+<div class="data">
+  <form>
+    <div class="form-group">
+      <div class="form-row">
+        <label>
+          <select class="browser-default custom-select" name="chosenCurrency" [(ngModel)]="chosenCurrency" (ngModelChange)="onChange()">
+            <option value=null>wybierz walutę</option>
+            <option *ngFor="let currency of currencies" [ngValue]="currency">
+              {{currency.shortName + " - " + currency.fullName}}
+            </option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </form>
+  <div class="chart-style" id="chart"></div>
+</div>

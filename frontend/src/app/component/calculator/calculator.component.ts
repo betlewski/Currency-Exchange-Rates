@@ -57,7 +57,8 @@ export class CalculatorComponent implements OnInit {
     let number = this.value2From;
 
     if(rate != null && number >= 0) {
-      this.value2To = number * rate;
+      let value = number * rate;
+      this.value2To = Math.round(value * 100) / 100;
     }
     else {
       this.value2To = null;

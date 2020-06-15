@@ -1,0 +1,17 @@
+.data {
+  position: absolute;
+  margin-top: 270px;
+  margin-left: 500px;
+}
+
+.custom-select {
+  width: 250px;
+  margin-left: 150px;
+}
+
+.chart-style {
+  margin-top: 40px;
+  margin-left: -40px;
+  width: 40vw;
+  height: 45vh;
+}

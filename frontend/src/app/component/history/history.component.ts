@@ -53,7 +53,9 @@ export class HistoryComponent implements OnInit {
 
     this.dataPoints = [];
     this.rates.forEach(rate => {
-      this.dataPoints.push({label: rate.date, y: rate.value});
+      this.dataPoints.push({
+        label: rate.date, y: rate.value, color: "darkgray"
+      });
       max = max < rate.value ? rate.value : max;
     });
     max += max * 0.6;
@@ -80,7 +82,8 @@ export class HistoryComponent implements OnInit {
       },
       data: [{
         type: "splineArea",
-        color: "lightgrey",
+        lineColor: "darkgray",
+        color: "rgba(210,210,210,0.7)",
         yValueFormatString: "#.## " + shortName,
         dataPoints: this.dataPoints
       }]

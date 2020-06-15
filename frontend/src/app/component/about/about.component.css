@@ -1,10 +1,10 @@
 .text {
   position: absolute;
-  font-family: 'Numans', serif;
-  font-size: 20px;
+  font-size: 21px;
+  color: rgba(0,0,0,0.7);
   text-align: center;
   margin-top: 350px;
-  margin-left: 480px;
+  margin-left: 520px;
 }
 
 .space {

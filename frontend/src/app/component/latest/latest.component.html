@@ -2,7 +2,7 @@
   <form>
     <div class="form-group">
       <label>
-        <input type="text" class="form-control" placeholder="szukaj wg nazwy">
+        <input type="text" class="form-control" placeholder="szukaj waluty" name="findName" [(ngModel)]="findText" (keyup)="onEvent()">
       </label>
       <label>
         <input class="form-control form-date" [(ngModel)]="date" name="date" [disabled]="true">
@@ -20,7 +20,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let rate of rates">
+    <tr *ngFor="let rate of foundRates">
       <td> {{rate.currency.shortName}} </td>
       <td> {{rate.currency.fullName}} </td>
       <td> {{rate.currency.country}} </td>

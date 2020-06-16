@@ -9,8 +9,14 @@
   margin-left: 150px;
 }
 
+.message {
+  margin-left: -20px;
+  margin-top: 150px;
+  text-align: center;
+}
+
 .chart-style {
-  margin-top: 40px;
+  margin-top: -130px;
   margin-left: -40px;
   width: 40vw;
   height: 45vh;

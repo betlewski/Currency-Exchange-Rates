@@ -3,7 +3,9 @@ import {Rate} from "../../model/rate";
 import {Currency} from "../../model/currency";
 import {CurrencyService} from "../../service/currency.service";
 import {RateService} from "../../service/rate.service";
+import {finalize} from "rxjs/operators";
 import * as CanvasJS from "../../../assets/canvasjs.min";
+import {from} from "rxjs";
 
 @Component({
   selector: 'app-history',
@@ -16,6 +18,7 @@ export class HistoryComponent implements OnInit {
   rates: Array<Rate>;
   chosenCurrency: Currency;
 
+  message: string;
   dataPoints = [];
   chart: CanvasJS;
 
@@ -24,6 +27,7 @@ export class HistoryComponent implements OnInit {
 
     this.loadCurrencies();
     this.chosenCurrency = null;
+    this.message = "Wybierz walutę, aby wyświetlić wykres zmian...";
   }
 
   ngOnInit(): void {
@@ -31,20 +35,18 @@ export class HistoryComponent implements OnInit {
 
   loadCurrencies() {
     this.currencyService.findAll()
-      .subscribe(
-        data => this.currencies = data
-            .filter(value => value.shortName != "EUR")
-      );
+      .subscribe(data =>
+          this.currencies = data.filter(
+            cur => cur.shortName != "EUR"));
   }
 
   loadRates() {
     let shortName = this.chosenCurrency.shortName;
     this.rateService.findAllByShortName(shortName)
+      .pipe(
+        finalize(() => this.refreshData()))
       .subscribe(
-        data => {
-          this.rates = data;
-          this.refreshData();
-        });
+        data => this.rates = data);
   }
 
   refreshData() {
@@ -52,14 +54,18 @@ export class HistoryComponent implements OnInit {
     let max = this.rates[0].value;
 
     this.dataPoints = [];
-    this.rates.forEach(rate => {
-      this.dataPoints.push({
-        label: rate.date, y: rate.value, color: "darkgray"
+    from(this.rates)
+      .pipe(
+        finalize(() => {
+          max += max * 0.6;
+          this.drawChart(shortName, max);
+        }))
+      .subscribe(rate => {
+        max = max < rate.value ? rate.value : max;
+        this.dataPoints.push({
+          label: rate.date, y: rate.value, color: "darkgray"
+        });
       });
-      max = max < rate.value ? rate.value : max;
-    });
-    max += max * 0.6;
-    this.drawChart(shortName, max);
   }
 
   drawChart(shortName: string, max: number) {

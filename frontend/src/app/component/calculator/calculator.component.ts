@@ -90,4 +90,8 @@ export class CalculatorComponent implements OnInit {
       this.value1To = null;
     }
   }
+
+  onEvent() {
+    this.calculate();
+  }
 }

@@ -1,6 +1,6 @@
 .data {
   position: absolute;
-  margin-top: 330px;
+  margin-top: 340px;
   margin-left: 500px;
 }
 
@@ -23,21 +23,8 @@
 
 .form-data {
   width: 100px;
-  height: 50px;
+  height: 60px;
   margin-left: 20px;
   margin-top: 10px;
   text-align: center;
-}
-
-.btn {
-  color: black;
-  background-color: lightskyblue;
-  font-family: 'Numans', serif;
-  width: 220px;
-  margin-left: 170px;
-  margin-top: 30px;
-}
-
-.btn:hover {
-  color: white;
 }

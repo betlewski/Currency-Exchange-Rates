@@ -29,16 +29,11 @@
       </div>
       <div class="form-row margin">
         <label>
-          <input class="form-control form-data" placeholder="liczba" [(ngModel)]="value2From" name="value2From">
+          <input class="form-control form-data" placeholder="liczba" [(ngModel)]="value2From" name="value2From" (keyup)="onEvent()">
         </label>
         <label>
           <input class="form-control form-data" name="value2To" [(ngModel)]="value2To" [disabled]="true">
         </label>
-      </div>
-      <div class="form-row">
-        <div class="form-group text-center">
-          <input type="submit" value="Oblicz" class="btn" (click)="calculate()">
-        </div>
       </div>
     </div>
   </form>

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import rx.Observable;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -70,10 +71,35 @@ public class DataAPIService {
         String date = json.get("date").toString();
         newDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        if(lastDate == null || newDate.isAfter(lastDate)) {
+        if (lastDate == null || newDate.isAfter(lastDate)) {
             JSONObject rates = (JSONObject) json.get("rates");
 
-            List<Currency> currencies = currencyRepository.findAll()
+            Observable.from(currencyRepository.findAll())
+                    .filter(currency -> !currency.getShortName().equals("EUR"))
+                    .subscribe(currency -> {
+                        String shortName = currency.getShortName();
+
+                        String rateString = rates.get(shortName).toString();
+                        Double rateValue = BigDecimal.valueOf(Double.parseDouble(rateString))
+                                .setScale(2, RoundingMode.HALF_UP)
+                                .doubleValue();
+
+                        double change = 0.0;
+                        Rate lastRate = rateRepository.findTopByCurrencyShortNameOrderByDateDesc(shortName)
+                                .orElse(null);
+
+                        if (lastRate != null) {
+                            String changeString = String.valueOf(
+                                    ((rateValue - lastRate.getValue()) * 100) / rateValue);
+
+                            change = BigDecimal.valueOf(Double.parseDouble(changeString))
+                                    .setScale(1, RoundingMode.HALF_UP)
+                                    .doubleValue();
+                        }
+                        Rate newRate = new Rate(0L, currency, rateValue, change, newDate);
+                        rateRepository.save(newRate);
+                    });
+            /*List<Currency> currencies = currencyRepository.findAll()
                     .stream()
                     .filter(currency -> !currency.getShortName().equals("EUR"))
                     .collect(Collectors.toList());
@@ -100,7 +126,7 @@ public class DataAPIService {
                 }
                 Rate newRate = new Rate(0L, currency, rateValue, change, newDate);
                 rateRepository.save(newRate);
-            }
+            }*/
             saveBaseRate(newDate);
             System.out.println("Update data on " + newDate);
         }

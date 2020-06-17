@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://exchange-rates.herokuapp.com/api'
+  baseUrl: 'https://waluty.herokuapp.com/api'
 };

@@ -18,9 +18,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class DataAPIService {
@@ -37,7 +35,7 @@ public class DataAPIService {
         this.rateRepository = rateRepository;
     }
 
-    @Scheduled(cron = "0 0 18 ? * MON-FRI")
+    @Scheduled(cron = "0 0 20 ? * MON-FRI")
     public void updateData() throws IOException, JSONException {
         JSONObject json = readDataFromUrl();
         saveDataFromUrl(json);
@@ -99,36 +97,11 @@ public class DataAPIService {
                         Rate newRate = new Rate(0L, currency, rateValue, change, newDate);
                         rateRepository.save(newRate);
                     });
-            /*List<Currency> currencies = currencyRepository.findAll()
-                    .stream()
-                    .filter(currency -> !currency.getShortName().equals("EUR"))
-                    .collect(Collectors.toList());
-
-            for (Currency currency : currencies) {
-                String shortName = currency.getShortName();
-
-                String rateString = rates.get(shortName).toString();
-                Double rateValue = BigDecimal.valueOf(Double.parseDouble(rateString))
-                        .setScale(2, RoundingMode.HALF_UP)
-                        .doubleValue();
-
-                double change = 0.0;
-                Rate lastRate = rateRepository.findTopByCurrencyShortNameOrderByDateDesc(shortName)
-                        .orElse(null);
-
-                if(lastRate != null) {
-                    String changeString = String.valueOf(
-                            ((rateValue - lastRate.getValue()) * 100) / rateValue);
-
-                    change = BigDecimal.valueOf(Double.parseDouble(changeString))
-                            .setScale(1, RoundingMode.HALF_UP)
-                            .doubleValue();
-                }
-                Rate newRate = new Rate(0L, currency, rateValue, change, newDate);
-                rateRepository.save(newRate);
-            }*/
             saveBaseRate(newDate);
             System.out.println("Update data on " + newDate);
+        }
+        else {
+            System.out.println("No update data on " + newDate);
         }
     }
 

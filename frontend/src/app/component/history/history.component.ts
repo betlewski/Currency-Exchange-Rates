@@ -51,16 +51,19 @@ export class HistoryComponent implements OnInit {
 
   refreshData() {
     let shortName = this.chosenCurrency.shortName;
+    let min = this.rates[0].value;
     let max = this.rates[0].value;
 
     this.dataPoints = [];
     from(this.rates)
       .pipe(
         finalize(() => {
-          max += max * 0.6;
-          this.drawChart(shortName, max);
+          min *= 0.95;
+          max *= 1.05;
+          this.drawChart(shortName, min, max);
         }))
       .subscribe(rate => {
+        min = min > rate.value ? rate.value : min;
         max = max < rate.value ? rate.value : max;
         this.dataPoints.push({
           label: rate.date, y: rate.value, color: "darkgray"
@@ -68,7 +71,7 @@ export class HistoryComponent implements OnInit {
       });
   }
 
-  drawChart(shortName: string, max: number) {
+  drawChart(shortName: string, min: number, max: number) {
     this.chart = new CanvasJS.Chart("chart", {
       theme: "light2",
       zoomEnabled: true,
@@ -83,6 +86,7 @@ export class HistoryComponent implements OnInit {
         horizontalAlign: "center"
       },
       axisY: {
+        minimum: min,
         maximum: max,
         suffix: " " + shortName
       },
@@ -90,7 +94,7 @@ export class HistoryComponent implements OnInit {
         type: "splineArea",
         lineColor: "darkgray",
         color: "rgba(210,210,210,0.7)",
-        yValueFormatString: "#.## " + shortName,
+        yValueFormatString: "#0.00## " + shortName,
         dataPoints: this.dataPoints
       }]
     });

@@ -10,8 +10,8 @@ and uses the rates published by
 
 ##
 <p>
-<img src="https://i.ibb.co/sq3zznF/image1.png" alt="page1" width="420"/>
-<img src="https://i.ibb.co/7YjSJgb/image2.png" alt="page2" width="420"/>
+<img src="https://i.ibb.co/sq3zznF/image1.png" alt="page1" width="500"/>
+<img src="https://i.ibb.co/7YjSJgb/image2.png" alt="page2" width="500"/>
 </p>
 
 ## What was used

@@ -37,7 +37,7 @@ public class DataAPIService {
         this.rateRepository = rateRepository;
     }
 
-    @Scheduled(cron = "0 16 10 ? * MON-FRI")
+    @Scheduled(cron = "0 19 10 ? * MON-FRI")
     public void updateData() throws IOException, JSONException {
         System.out.println("Update data on " + LocalDateTime.now());
         /*JSONObject json = readDataFromUrl();

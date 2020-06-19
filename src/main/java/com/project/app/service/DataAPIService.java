@@ -26,7 +26,7 @@ import java.util.Optional;
 @Component
 public class DataAPIService {
 
-    private CurrencyRepository currencyRepository;
+     private CurrencyRepository currencyRepository;
     private RateRepository rateRepository;
 
     private static final String API_URL = "https://api.exchangeratesapi.io/latest";

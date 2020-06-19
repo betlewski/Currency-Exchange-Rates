@@ -22,8 +22,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-//@Service
-@Component
+@Service
+//@Component
 public class DataAPIService {
 
      private CurrencyRepository currencyRepository;

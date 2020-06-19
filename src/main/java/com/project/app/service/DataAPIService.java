@@ -23,7 +23,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
-//@Component
 public class DataAPIService {
 
      private CurrencyRepository currencyRepository;
@@ -38,7 +37,7 @@ public class DataAPIService {
         this.rateRepository = rateRepository;
     }
 
-    @Scheduled(cron = "*/10 * * ? * MON-FRI")
+    @Scheduled(cron = "0 16 10 ? * MON-FRI")
     public void updateData() throws IOException, JSONException {
         System.out.println("Update data on " + LocalDateTime.now());
         /*JSONObject json = readDataFromUrl();

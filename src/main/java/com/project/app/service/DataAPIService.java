@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import rx.Observable;
 
@@ -17,10 +18,12 @@ import java.math.RoundingMode;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-@Service
+//@Service
+@Component
 public class DataAPIService {
 
     private CurrencyRepository currencyRepository;
@@ -35,10 +38,11 @@ public class DataAPIService {
         this.rateRepository = rateRepository;
     }
 
-    @Scheduled(cron = "0 0 20 ? * MON-FRI")
+    @Scheduled(cron = "*/10 * * ? * MON-FRI")
     public void updateData() throws IOException, JSONException {
-        JSONObject json = readDataFromUrl();
-        saveDataFromUrl(json);
+        System.out.println("Update data on " + LocalDateTime.now());
+        /*JSONObject json = readDataFromUrl();
+        saveDataFromUrl(json);*/
     }
 
     private JSONObject readDataFromUrl() throws IOException {

@@ -27,5 +27,5 @@ The application is available in Polish at: https://waluty.herokuapp.com/
 
 ## Created by
 - <a href="https://github.com/betlewski"> Szymon Betlewski </a>
-- <a href="https://github.com/graigord"> Krystian Bursztyński </a>
-- <a href="https://github.com/Darmisco"> Stanisław Rubaj </a>
+- <a href="https://github.com/graigord"> Krystian Bursztyński </a> 
+- <a href="https://github.com/Darmisco"> Stanisław Rubaj </a> 
